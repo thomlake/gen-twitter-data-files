@@ -3,7 +3,6 @@ import json, urllib2, sys
 
 def search(searchword, fname = "search-out.txt", numsamples = 1500):
 	searchword = searchword
-	n = numsamples
 	ctr = 0
 	ofile = open(fname, "w")
 	page = 1
