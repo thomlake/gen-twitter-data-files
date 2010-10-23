@@ -7,7 +7,7 @@ def search(searchword, fname = "search-out.txt", numsamples = 1500):
 	ofile = open(fname, "w")
 	page = 1
 	while ctr < numsamples:
-		url = urllib2.urlopen("http://search.twitter.com/search.json?q=stuff&page=" + str(page))
+		url = urllib2.urlopen("http://search.twitter.com/search.json?q=" + searchword + "&page=" + str(page))
 		json_response = json.load(url)
 		page += 1
 		for response in json_response["results"]:
@@ -15,7 +15,7 @@ def search(searchword, fname = "search-out.txt", numsamples = 1500):
 			try:
 				if response["iso_language_code"] == "en":
 					tweet = response['text']
-					print tweet
+					#print tweet
 					ofile.write(tweet.encode("iso-8859-1", "ignore") + "\n")
 			except:
 				pass

@@ -2,7 +2,7 @@ import tweepy, sys
 
 class StreamController:
 	def __init__(self, uname, pword, fname = "samp-out.txt"):
-		self.n = 10000 #number of samples
+		self.n = 50000 #number of samples
 		self.ofile = open(fname, "w")
 		self.handler = StreamHandler(self)
 		self.stream = tweepy.Stream(uname, pword, self.handler, timeout=None)
