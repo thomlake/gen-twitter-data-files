@@ -13,7 +13,6 @@ class StreamController:
 	def is_standard_ascii(self, text):
 		for c in text:
 			if c > '~':
-				print "non-ascii =", c, ":", text
 				return False
 		return True
 	
