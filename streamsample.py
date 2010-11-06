@@ -2,16 +2,26 @@ import tweepy, sys
 
 class StreamController:
 	def __init__(self, uname, pword, fname = "samp-out.txt"):
-		self.n = 50000 #number of samples
+		self.n = 100000 #number of samples
 		self.ofile = open(fname, "w")
 		self.handler = StreamHandler(self)
 		self.stream = tweepy.Stream(uname, pword, self.handler, timeout=None)
 
 		self.ctr = 0
 		self.tweetlist = []
-		
+
+	def is_standard_ascii(self, text):
+		for c in text:
+			if c > '~':
+				print "non-ascii =", c, ":", text
+				return False
+		return True
+	
 	def handle_tweet(self, tweettext):
-		self.ofile.write(tweettext.encode("iso-8859-1", "ignore") + "\n")
+		if self.is_standard_ascii(tweettext):
+			tweettext = tweettext.replace('\n', ' ')
+			self.ctr += 1		
+			self.ofile.write(tweettext.encode("iso-8859-1", "ignore") + "\n")
 	
 	def start_sample(self):
 		self.stream.sample()
@@ -25,12 +35,10 @@ class StreamHandler(tweepy.StreamListener):
 	def __init__(self, controller = None):
 		super(StreamHandler, self).__init__()
 		self.controller = controller
-		self.count = 0
 	
 	def on_status(self, status):
-		if self.count < self.controller.n:
+		if self.controller.ctr < self.controller.n:
 			if status.author.lang == "en":
-				self.count += 1
 				self.controller.handle_tweet(status.text)
 		else:
 			self.controller.stop_sample()
