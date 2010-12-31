@@ -15,16 +15,16 @@ class StreamController:
 			if c > '~':
 				return False
 		return True
-	
+
 	def handle_tweet(self, tweettext):
 		if self.is_standard_ascii(tweettext):
 			tweettext = tweettext.replace('\n', ' ')
-			self.ctr += 1		
+			self.ctr += 1
 			self.ofile.write(tweettext.encode("iso-8859-1", "ignore") + "\n")
-	
+
 	def start_sample(self):
 		self.stream.sample()
-	
+
 	def stop_sample(self):
 		self.stream.disconnect()
 		for i, twit in enumerate(self.tweetlist):
@@ -34,7 +34,7 @@ class StreamHandler(tweepy.StreamListener):
 	def __init__(self, controller = None):
 		super(StreamHandler, self).__init__()
 		self.controller = controller
-	
+
 	def on_status(self, status):
 		if self.controller.ctr < self.controller.n:
 			if status.author.lang == "en":
