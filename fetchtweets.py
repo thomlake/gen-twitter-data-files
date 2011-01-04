@@ -8,8 +8,8 @@ MAX_SLEEP_TIME = 240.0
 WAIT_TIME = 4.0
 
 
-USR = 'thomlake'
-PWD = 'bigben10'
+USR = ''
+PWD = ''
 
 def timeout(func, args = [], duration = 2.0):
 	class TimeoutThread(threading.Thread):
@@ -128,4 +128,6 @@ def main():
 
 
 if __name__ == '__main__':
+	USR = sys.argv[1]
+	PWD = sys.argv[2]
 	main()
